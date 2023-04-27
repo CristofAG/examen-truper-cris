@@ -1,0 +1,44 @@
+table {
+  width: 100%;
+}
+
+.mat-column-sucursal_id {
+  width: 50%;
+}
+
+.mat-column-nombre {
+  width: 50%;
+}
+
+.mat-column-producto_id {
+  width: 25%;
+}
+
+.mat-column-codigo {
+  width: 25%;
+}
+
+.mat-column-descripcion {
+  width: 25%;
+}
+
+.mat-column-precio {
+  width: 12%;
+}
+
+.mat-column-modificar {
+  width: 13%;
+}
+
+.mat-row:hover > .mat-cell {
+  background: whitesmoke;
+}
+
+ul {
+  padding: 10px;
+  list-style-position: inside;
+}
+
+ul > li {
+  padding: 6px;
+}

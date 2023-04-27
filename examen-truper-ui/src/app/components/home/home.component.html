@@ -1,0 +1,89 @@
+<mat-card>
+  <mat-card-content>
+    <mat-card-title>Elija una sucursal:</mat-card-title>
+
+    <!-- Tabla de Sucursales -->
+    <div class="table-container mat-elevation-z8">
+      <table mat-table [dataSource]="dataSourceSucursales">
+        <!-- ID Column -->
+        <ng-container matColumnDef="sucursal_id">
+          <th mat-header-cell *matHeaderCellDef> No. </th>
+          <td mat-cell *matCellDef="let element"> {{element.sucursal_id}} </td>
+        </ng-container>
+
+        <!-- Nombre Column -->
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef> Nombre </th>
+          <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row (click)="selectSucursal(row)" *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+
+    <h4 *ngIf="sucursalSeleccionada">Sucursal seleccionada: {{ sucursalSeleccionada.nombre }}</h4>
+    <hr *ngIf="sucursalSeleccionada">
+
+    <h3 *ngIf="sucursalSeleccionada">De click en el producto que desea agregar a la lista</h3>
+
+    <div class="table-container mat-elevation-z8" *ngIf="sucursalSeleccionada">
+      <table mat-table [dataSource]="dataSourceProductos">
+        <!-- ID Column -->
+        <ng-container matColumnDef="producto_id">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let element"> {{element.producto_id}} </td>
+        </ng-container>
+
+        <!-- Código Column -->
+        <ng-container matColumnDef="codigo">
+          <th mat-header-cell *matHeaderCellDef> C&oacute;digo </th>
+          <td mat-cell *matCellDef="let element"> {{element.codigo}} </td>
+        </ng-container>
+
+        <!-- Descripción Column -->
+        <ng-container matColumnDef="descripcion">
+          <th mat-header-cell *matHeaderCellDef> Descripci&oacute;n </th>
+          <td mat-cell *matCellDef="let element"> {{element.descripcion}} </td>
+        </ng-container>
+
+        <!-- Precio Column -->
+        <ng-container matColumnDef="precio">
+          <th mat-header-cell *matHeaderCellDef> Descripci&oacute;n </th>
+          <td mat-cell *matCellDef="let element"> {{element.precio | currency:'MXN':'symbol'}} </td>
+        </ng-container>
+
+        <!-- Modificar Column -->
+        <ng-container matColumnDef="modificar">
+          <th mat-header-cell *matHeaderCellDef> Modificar </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-raised-button color="primary" (click)="abrirDialogoModificar()">
+              Modificar
+            </button>
+          </td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsProducto"></tr>
+        <tr mat-row (click)="agregaProducto(row)" *matRowDef="let row; columns: displayedColumnsProducto;"></tr>
+      </table>
+    </div>
+
+    <div *ngIf="listaProductos.length > 0">
+      <hr>
+      <h4>Productos agregados a la lista: </h4>
+      <div class="mat-elevation-z5">
+        <ul>
+          <li *ngFor="let prod of listaProductos">{{ prod.descripcion + ' - ' + (prod.precio | currency : 'MXN' : 'symbol') }}</li>
+        </ul>
+      </div>
+      <h4 *ngIf="totalCarrito > 0">Total: {{ totalCarrito | currency:'MXN':'symbol' }}</h4>
+    </div>
+
+    <mat-card-actions  *ngIf="listaProductos.length > 0">
+      <button mat-raised-button color="primary" (click)="guardaOrden()">Comprar</button>
+      <button mat-raised-button color="accent" (click)="vaciaCarrito()">Vaciar Carrito</button>
+    </mat-card-actions>
+  </mat-card-content>
+</mat-card>
+
